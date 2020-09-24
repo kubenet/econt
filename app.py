@@ -59,5 +59,4 @@ def index():
     return render_template('index.html', dict_score=dict_score, fact=list_facts[random.randint(0, 16)], form=form)
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+

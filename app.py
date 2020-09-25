@@ -53,10 +53,29 @@ def index():
             dict_score[key_container] = score + random.randint(1, 8)  # добавляем баллы команде
             # выводим данные
             print("Получены данные {} и {}".format(name, code))
-            return render_template('index.html', dict_score=dict_score, fact=list_facts[random.randint(0, 16)], form=form)
+            return render_template('index.html', dict_score=dict_score, fact=list_facts[random.randint(0, 16)],
+                                   form=form)
         else:
             return '<H1> Error! </H1>'
     return render_template('index.html', dict_score=dict_score, fact=list_facts[random.randint(0, 16)], form=form)
 
 
+@app.route('/newpage/', methods=['GET', 'POST'])
+def newpage():
+    form = VerificationForm()
 
+    if request.method == 'POST':
+        # получаем данные
+        name = form.name.data
+        code = form.code.data
+        key_container = random.choice(list(dict_score.keys()))
+        if code in lst_code:  # если такой код существует
+            score = dict_score.setdefault(key_container, 0)  # если такого пользователя не существует, тогда создаем его
+            dict_score[key_container] = score + random.randint(1, 8)  # добавляем баллы команде
+            # выводим данные
+            print("Получены данные {} и {}".format(name, code))
+            return render_template('newpage.html', dict_score=dict_score, fact=list_facts[random.randint(0, 16)],
+                                   form=form)
+        else:
+            return '<H1> Error! </H1>'
+    return render_template('newpage.html', dict_score=dict_score, fact=list_facts[random.randint(0, 16)], form=form)
